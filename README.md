@@ -1,1 +1,1 @@
-# prism-typeface
+# Prism Typeface
