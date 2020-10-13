@@ -508,8 +508,6 @@ $(document).ready(function() {
       targets: "#p .rectangle",
       keyframes: [
         { scale: "5" },
-        { scale: "10" },
-        { scale: "5" },
         { scale: "1" }
       ],
       rotate: "1turn",
