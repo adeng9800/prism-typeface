@@ -119,8 +119,8 @@ header {
   position: relative;
   height: 5vw;
   width: 5vw;
-  
-/*   border: 1px solid; */
+
+  /*   border: 1px solid; */
 }
 
 /* P */
@@ -179,6 +179,7 @@ header {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
+
   transform-origin: center center;
 }
 
@@ -204,10 +205,11 @@ header {
 #word-s .semi-circle {
   position: absolute;
   top: 50%;
-  transform-origin: top center;
   height: 45%;
   width: 90%;
   border-radius: 0 0 15vw 15vw;
+
+  transform-origin: top center;
 }
 
 #word-s .semi-circle:nth-of-type(1) {
@@ -273,7 +275,7 @@ header {
   height: 15vw;
   width: 15vw;
 
-/*   border: 1px solid; */
+  border: 1px solid;
 }
 
 /* Alphabet */
@@ -283,6 +285,8 @@ header {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
+
+  transform-origin: center center;
 }
 
 #a .triangle:nth-of-type(1) {
@@ -365,6 +369,8 @@ header {
   background: rgba(251, 176, 255, 0.6);
 
   transform: translateX(40%);
+
+  transform-origin: center center;
 }
 
 #d .semi-circle {
@@ -373,17 +379,18 @@ header {
   border-radius: 0 15vw 15vw 0;
   background: rgba(34, 242, 221, 0.6);
 
-  left: 10vw;
+  transform: translateX(-15%);
 }
 
 /* E */
 #e .semi-circle {
   position: absolute;
   top: 50%;
-  transform-origin: top center;
   height: 50%;
   width: 100%;
   border-radius: 0 0 15vw 15vw;
+
+  transform-origin: top center;
 }
 
 #e .semi-circle:nth-of-type(1) {
@@ -401,6 +408,8 @@ header {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
+  
+  transform-origin: center center;
 }
 
 #f .right-triangle:nth-of-type(1) {
@@ -426,10 +435,11 @@ header {
 #g .semi-circle {
   position: absolute;
   top: 50%;
-  transform-origin: top center;
   height: 50%;
   width: 100%;
   border-radius: 0 0 15vw 15vw;
+
+  transform-origin: top center;
 }
 
 #g .semi-circle:nth-of-type(1) {
@@ -485,6 +495,8 @@ header {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
+  
+  transform-origin: center center;
 }
 
 #i .rectangle:nth-of-type(1) {
@@ -509,6 +521,7 @@ header {
 #j .semi-circle,
 .rectangle {
   position: absolute;
+
   transform-origin: top center;
 }
 
@@ -573,6 +586,8 @@ header {
 
   z-index: 1;
   bottom: 0;
+  
+  transform-origin: top right;
 }
 
 /* M */
@@ -627,10 +642,11 @@ header {
 #o .semi-circle {
   position: absolute;
   top: 50%;
-  transform-origin: top center;
   height: 50%;
   width: 100%;
   border-radius: 0 0 15vw 15vw;
+
+  transform-origin: top center;
 }
 
 #o .semi-circle:nth-of-type(1) {
@@ -676,6 +692,7 @@ header {
 #q .circle,
 .small-semi-circle {
   position: absolute;
+
   transform-origin: top center;
 }
 
@@ -732,10 +749,11 @@ header {
 #s .semi-circle {
   position: absolute;
   top: 50%;
-  transform-origin: top center;
   height: 45%;
   width: 90%;
   border-radius: 0 0 15vw 15vw;
+
+  transform-origin: top center;
 }
 
 #s .semi-circle:nth-of-type(1) {
@@ -780,10 +798,11 @@ header {
 #u .semi-circle {
   position: absolute;
   top: 50%;
-  transform-origin: top center;
   height: 50%;
   width: 100%;
   border-radius: 0 0 15vw 15vw;
+
+  transform-origin: top center;
 }
 
 #u .semi-circle:nth-of-type(1) {
@@ -874,6 +893,7 @@ header {
 #y .semi-circle,
 .rectangle {
   position: absolute;
+
   transform-origin: top center;
 }
 
