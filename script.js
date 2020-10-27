@@ -15,7 +15,7 @@ $(document).ready(function() {
   const anime = window.anime;
 
   $(document).on("mousemove", function(map) {
-    $("#cursor").css({
+    $("#cursor-parent").css({
       visibility: "visible",
       top: map.pageY + "px",
       left: map.pageX + "px"
@@ -27,6 +27,46 @@ $(document).ready(function() {
   $("html").mousemove(function(map) {
     mouseX = map.pageX;
     mouseY = map.pageY;
+  });
+  
+//   $("html").scroll(function(map) {
+//     mouseX = map.pageX;
+//     mouseY = map.pageY;
+//   });
+  
+//   $(window).scroll(function(map) {
+//     console.log("HI")
+//     $("#cursor-parent").css({
+//       visibility: "visible",
+//       top: map.pageY + "px",
+//       left: map.pageX + "px"
+//     });
+//     mouseX = map.pageX;
+//     mouseY = map.pageY;
+//   });
+  
+  $(".word-letter").mouseenter(function() {
+    $("#cursor").css("background-color", "rgba(255,255,255, 0)");
+    $("#cursor").css("border", "0.1vw solid #fff");
+    $("#cursor").css({transform: "scale(1.5)"});
+  });
+
+  $(".word-letter").mouseleave(function() {
+    $("#cursor").css("background-color", "rgba(255,255,255, 0.5)");
+    $("#cursor").css("border", "0vw solid #fff");
+    $("#cursor").css({transform: "scale(1)"});
+  });
+
+  $(".letter").mouseenter(function() {
+    $("#cursor").css("background-color", "rgba(255,255,255, 0)");
+    $("#cursor").css("border", "0.1vw solid #fff");
+    $("#cursor").css({transform: "scale(2)"});
+  });
+
+  $(".letter").mouseleave(function() {
+    $("#cursor").css("background-color", "rgba(255,255,255, 0.5)");
+    $("#cursor").css("border", "0vw solid #fff");
+    $("#cursor").css({transform: "scale(1)"});
   });
 
   // A
@@ -1267,7 +1307,7 @@ $(document).ready(function() {
   });
 
   // N
- var animation_n_one = null;
+  var animation_n_one = null;
   var animation_n_two = null;
   var animation_n_one_return = null;
   var animation_n_two_return = null;
@@ -1344,32 +1384,107 @@ $(document).ready(function() {
   });
 
   // O
-  var animation_o = null;
-  var animation_o_return = null;
+  var animation_o_one = null;
+  var animation_o_two = null;
+  var animation_o_one_return = null;
+  var animation_o_two_return = null;
   $("#o").mouseenter(function() {
-    anime.set("#o .semi-circle:nth-of-type(2)", {
+    if (animation_o_one != null) animation_o_one.pause();
+    if (animation_o_two != null) animation_o_two.pause();
+    if (animation_o_one_return != null) animation_o_one_return.pause();
+    if (animation_o_two_return != null) animation_o_two_return.pause();
+    anime.set("#o .semi-circle:nth-of-type(1)", {
       translateX: "-50%",
-      rotate: "270deg"
+      translateY: "0%",
+      rotate: 90
     });
 
-    animation_o = anime({
-      targets: "#o .semi-circle:nth-of-type(2)",
-      // scale: "50",
-      rotate: "1turn",
-      duration: 450000,
-      loop: true,
-      direction: "normal",
-      easing: "easeOutQuad"
+    anime.set("#o .semi-circle:nth-of-type(2)", {
+      translateX: "-50%",
+      translateY: "0%",
+      rotate: 270
     });
+
+    animation_o_one = anime.timeline({
+      easing: "easeInOutCirc",
+      duration: 750,
+      loop: true
+    });
+
+    animation_o_one
+      .add({
+        targets: "#o .semi-circle:nth-of-type(1)",
+        translateX: "0%"
+      })
+      .add({
+        targets: "#o .semi-circle:nth-of-type(1)",
+        translateX: "-50%",
+        translateY: "-100%",
+        rotate: 90 - 90
+      })
+      .add({
+        targets: "#o .semi-circle:nth-of-type(1)",
+        translateX: "-50%",
+        translateY: "0%",
+        rotate: 0 - 180
+      })
+      .add({
+        targets: "#o .semi-circle:nth-of-type(1)",
+        translateX: "-50%",
+        translateY: "0%",
+        rotate: 90
+      });
+
+    animation_o_two = anime.timeline({
+      easing: "easeInOutCirc",
+      duration: 750,
+      loop: true
+    });
+
+    animation_o_two
+      .add({
+        targets: "#o .semi-circle:nth-of-type(2)",
+        translateX: "-100%"
+      })
+      .add({
+        targets: "#o .semi-circle:nth-of-type(2)",
+        translateX: "-50%",
+        translateY: "100%",
+        rotate: 270 - 90
+      })
+      .add({
+        targets: "#o .semi-circle:nth-of-type(2)",
+        translateX: "-50%",
+        translateY: "0%",
+        rotate: 180 - 180
+      })
+      .add({
+        targets: "#o .semi-circle:nth-of-type(2)",
+        translateX: "-50%",
+        translateY: "0%",
+        rotate: 270
+      });
   });
 
   $("#o").mouseleave(function() {
-    animation_o.pause();
-    animation_o_return = anime({
-      targets: "#o .semi-circle:nth-of-type(2)",
+    if (animation_o_one != null) animation_o_one.pause();
+    if (animation_o_two != null) animation_o_two.pause();
+    if (animation_o_one_return != null) animation_o_one_return.pause();
+    if (animation_o_two_return != null) animation_o_two_return.pause();
+    animation_o_one_return = anime({
+      targets: "#o .semi-circle:nth-of-type(1)",
+      translateX: "-50%",
+      translateY: "0%",
       scale: 1,
-      rotate: "270deg",
-      duration: 1500
+      rotate: 90
+    });
+
+    animation_o_two_return = anime({
+      targets: "#o .semi-circle:nth-of-type(2)",
+      translateX: "-50%",
+      translateY: "0%",
+      scale: 1,
+      rotate: 270
     });
   });
 
@@ -1475,31 +1590,97 @@ $(document).ready(function() {
   });
 
   // Q
-  var animation_q = null;
-  var animation_q_return = null;
+  var animation_q_one = null;
+  var animation_q_two = null;
+  var animation_q_one_return = null;
+  var animation_q_two_return = null;
   $("#q").mouseenter(function() {
-    anime.set("#q .small-semi-circle", {
+    if (animation_q_one != null) animation_q_one.pause();
+    if (animation_q_two != null) animation_q_two.pause();
+    if (animation_q_one_return != null) animation_q_one_return.pause();
+    if (animation_q_two_return != null) animation_q_two_return.pause();
+    anime.set("#q .circle", {
       translateX: "0%",
-      rotate: "45deg"
+      translateY: "0%",
+      scale: 1,
+      rotate: 0
     });
 
-    animation_q = anime({
-      targets: "#q .small-semi-circle",
-      scale: "50",
-      rotate: "1turn",
-      duration: 150000,
-      loop: true,
-      easing: "easeOutQuad"
+    anime.set("#q .small-semi-circle", {
+      translateX: "0%",
+      translateY: "0%",
+      rotate: 45
     });
+
+    animation_q_one = anime.timeline({
+      easing: "easeInOutCirc",
+      duration: 750,
+      loop: true
+    });
+
+    animation_q_one
+      .add({
+        targets: "#q .circle",
+        translateY: "30%",
+        scale: 0.5
+      })
+      .add({
+        targets: "#q .circle",
+        translateX: "0%",
+        borderRadius: "0%"
+      })
+      .add({
+        targets: "#q .circle",
+        translateX: "0%",
+        translateY: "0%",
+        scale: 1,
+        borderRadius: "50%"
+      });
+
+    animation_q_two = anime.timeline({
+      easing: "easeInOutCirc",
+      duration: 750,
+      loop: true
+    });
+
+    animation_q_two
+      .add({
+        targets: "#q .small-semi-circle",
+        translateY: "-300%",
+        rotate: 315
+      })
+      .add({
+        targets: "#q .small-semi-circle",
+        translateY: "-125%",
+        rotate: 180
+      })
+      .add({
+        targets: "#q .small-semi-circle",
+        translateY: "0%",
+        rotate: 45
+      });
   });
 
   $("#q").mouseleave(function() {
-    animation_q.pause();
-    animation_q_return = anime({
-      targets: "#q .small-semi-circle",
+    if (animation_q_one != null) animation_q_one.pause();
+    if (animation_q_two != null) animation_q_two.pause();
+    if (animation_q_one_return != null) animation_q_one_return.pause();
+    if (animation_q_two_return != null) animation_q_two_return.pause();
+    animation_q_one_return = anime({
+      targets: "#q .circle",
+      translateX: "0%",
+      translateY: "0%",
+      borderRadius: "50%",
       scale: 1,
-      rotate: "45deg",
-      duration: 1500
+      rotate: 0
+    });
+
+    animation_q_two_return = anime({
+      targets: "#q .small-semi-circle",
+      translateX: "0%",
+      translateY: "0%",
+      scale: 1,
+      rotate: 45
     });
   });
 
@@ -1660,211 +1841,652 @@ $(document).ready(function() {
   });
 
   // T
-  var animation_t = null;
-  var animation_t_return = null;
+  var animation_t_one = null;
+  var animation_t_two = null;
+  var animation_t_one_return = null;
+  var animation_t_two_return = null;
   $("#t").mouseenter(function() {
-    anime.set("#t .rectangle:nth-of-type(2)", {
+    if (animation_t_one != null) animation_t_one.pause();
+    if (animation_t_two != null) animation_t_two.pause();
+    if (animation_t_one_return != null) animation_t_one_return.pause();
+    if (animation_t_two_return != null) animation_t_two_return.pause();
+    anime.set("#t .rectangle:nth-of-type(1)", {
       translateX: "-50%",
-      rotate: "0deg"
+      translateY: "0%",
+      rotate: 0
     });
 
-    animation_t = anime({
-      targets: "#t .rectangle:nth-of-type(2)",
-      keyframes: [{ scale: "5" }, { scale: "1" }],
-      rotate: "1turn",
-      duration: 1500,
-      loop: true,
-      direction: "normal",
-      easing: "easeInOutQuad"
+    anime.set("#t .rectangle:nth-of-type(2)", {
+      translateX: "-50%",
+      translateY: "0%",
+      rotate: 0
     });
+
+    animation_t_one = anime.timeline({
+      easing: "easeInOutCirc",
+      duration: 750,
+      loop: true
+    });
+
+    animation_t_one
+      .add({
+        targets: "#t .rectangle:nth-of-type(1)",
+        scaleY: 0.3,
+        translateY: "0%",
+        borderRadius: "50%"
+      })
+      .add({
+        targets: "#t .rectangle:nth-of-type(1)",
+        scaleY: 0.3,
+        translateY: "70%",
+        borderRadius: "50%"
+      })
+      .add({
+        targets: "#t .rectangle:nth-of-type(1)",
+        scaleY: 1,
+        translateY: "0%",
+        borderRadius: "0%"
+      });
+
+    animation_t_two = anime.timeline({
+      easing: "easeInOutCirc",
+      duration: 750,
+      loop: true
+    });
+
+    animation_t_two
+      .add({
+        targets: "#t .rectangle:nth-of-type(2)",
+        translateY: "200%",
+        borderRadius: "0%"
+      })
+      .add({
+        targets: "#t .rectangle:nth-of-type(2)",
+        scaleX: 0.3,
+        translateY: "100%",
+        borderRadius: "50%"
+      })
+      .add({
+        targets: "#t .rectangle:nth-of-type(2)",
+        scaleX: 1,
+        translateY: "0%",
+        borderRadius: "0%"
+      });
   });
 
   $("#t").mouseleave(function() {
-    animation_t.pause();
-    animation_t_return = anime({
+    if (animation_t_one != null) animation_t_one.pause();
+    if (animation_t_two != null) animation_t_two.pause();
+    if (animation_t_one_return != null) animation_t_one_return.pause();
+    if (animation_t_two_return != null) animation_t_two_return.pause();
+    animation_t_one_return = anime({
+      targets: "#t .rectangle:nth-of-type(1)",
+      translateX: "-50%",
+      translateY: "0%",
+      borderRadius: "0%",
+      scaleY: 1,
+      rotate: 0
+    });
+
+    animation_t_two_return = anime({
       targets: "#t .rectangle:nth-of-type(2)",
-      scale: 1,
-      rotate: "0deg",
-      duration: 1500
+      translateX: "-50%",
+      translateY: "0%",
+      borderRadius: "0%",
+      scaleX: 1,
+      rotate: 0
     });
   });
 
   // U
-  var animation_u = null;
-  var animation_u_return = null;
+  var animation_u_one = null;
+  var animation_u_two = null;
+  var animation_u_one_return = null;
+  var animation_u_two_return = null;
   $("#u").mouseenter(function() {
-    anime.set("#u .semi-circle:nth-of-type(2)", {
+    if (animation_u_one != null) animation_u_one.pause();
+    if (animation_u_two != null) animation_u_two.pause();
+    if (animation_u_one_return != null) animation_u_one_return.pause();
+    if (animation_u_two_return != null) animation_u_two_return.pause();
+    anime.set("#u .semi-circle:nth-of-type(1)", {
       translateX: "-50%",
-      rotate: "300deg"
+      translateY: "0%",
+      rotate: 60
     });
 
-    animation_u = anime({
-      targets: "#u .semi-circle:nth-of-type(2)",
-      scale: "50",
-      rotate: "1turn",
-      duration: 350000,
-      loop: true,
-      easing: "easeOutQuad"
+    anime.set("#u .semi-circle:nth-of-type(2)", {
+      translateX: "-50%",
+      translateY: "0%",
+      rotate: 300
     });
+
+    animation_u_one = anime.timeline({
+      easing: "easeInOutCirc",
+      duration: 1000,
+      loop: true
+    });
+
+    animation_u_one
+      .add({
+        targets: "#u .semi-circle:nth-of-type(1)",
+        rotate: 60 + 180
+      })
+      .add({
+        targets: "#u .semi-circle:nth-of-type(1)",
+        rotate: 240 + 180
+      })
+      .add({
+        targets: "#u .semi-circle:nth-of-type(1)",
+        rotate: 420 + 90
+      })
+      .add({
+        targets: "#u .semi-circle:nth-of-type(1)",
+        rotate: 510 - 90
+      })
+      .add({
+        targets: "#u .semi-circle:nth-of-type(1)",
+        rotate: 420 - 180
+      })
+      .add({
+        targets: "#u .semi-circle:nth-of-type(1)",
+        rotate: 240 - 180
+      });
+
+    animation_u_two = anime.timeline({
+      easing: "easeInOutCirc",
+      duration: 1000,
+      loop: true
+    });
+
+    animation_u_two
+      .add({
+        targets: "#u .semi-circle:nth-of-type(2)",
+        rotate: 300 - 180
+      })
+      .add({
+        targets: "#u .semi-circle:nth-of-type(2)",
+        rotate: 120 - 180
+      })
+      .add({
+        targets: "#u .semi-circle:nth-of-type(2)",
+        rotate: -60 - 90
+      })
+      .add({
+        targets: "#u .semi-circle:nth-of-type(2)",
+        rotate: -150 + 90
+      })
+      .add({
+        targets: "#u .semi-circle:nth-of-type(2)",
+        rotate: -60 + 180
+      })
+      .add({
+        targets: "#u .semi-circle:nth-of-type(2)",
+        rotate: 120 + 180
+      });
   });
 
   $("#u").mouseleave(function() {
-    animation_u.pause();
-    animation_u_return = anime({
-      targets: "#u .semi-circle:nth-of-type(2)",
+    if (animation_u_one != null) animation_u_one.pause();
+    if (animation_u_two != null) animation_u_two.pause();
+    if (animation_u_one_return != null) animation_u_one_return.pause();
+    if (animation_u_two_return != null) animation_u_two_return.pause();
+    animation_u_one_return = anime({
+      targets: "#u .semi-circle:nth-of-type(1)",
+      translateX: "-50%",
+      translateY: "0%",
       scale: 1,
-      rotate: "300deg",
-      duration: 1500
+      rotate: 60
+    });
+
+    animation_u_two_return = anime({
+      targets: "#u .semi-circle:nth-of-type(2)",
+      translateX: "-50%",
+      translateY: "0%",
+      scale: 1,
+      rotate: 300
     });
   });
 
   // V
-  var animation_v = null;
-  var animation_v_return = null;
+  var animation_v_one = null;
+  var animation_v_two = null;
+  var animation_v_one_return = null;
+  var animation_v_two_return = null;
   $("#v").mouseenter(function() {
-    anime.set("#v .triangle:nth-of-type(2)", {
+    if (animation_v_one != null) animation_v_one.pause();
+    if (animation_v_two != null) animation_v_two.pause();
+    if (animation_v_one_return != null) animation_v_one_return.pause();
+    if (animation_v_two_return != null) animation_v_two_return.pause();
+    anime.set("#v .triangle:nth-of-type(1)", {
       translateX: "-50%",
-      rotate: "0deg"
+      translateY: "0%",
+      rotate: 0
     });
 
-    animation_v = anime({
-      targets: "#v .triangle:nth-of-type(2)",
-      keyframes: [{ scale: "5" }, { scale: "1" }],
-      rotate: "1turn",
-      duration: 1500,
-      loop: true,
-      direction: "alternate",
-      easing: "easeInOutQuad"
+    anime.set("#v .triangle:nth-of-type(2)", {
+      translateX: "-50%",
+      translateY: "0%",
+      rotate: 0
     });
+
+    animation_v_one = anime.timeline({
+      easing: "easeInOutCirc",
+      duration: 750,
+      loop: true
+    });
+
+    animation_v_one
+      .add({
+        targets: "#v .triangle:nth-of-type(1)",
+        rotate: 0 + 360
+      })
+      .add({
+        targets: "#v .triangle:nth-of-type(1)",
+        rotate: 0
+      });
+
+    animation_v_two = anime.timeline({
+      easing: "easeInOutCirc",
+      duration: 750,
+      loop: true
+    });
+
+    animation_v_two
+      .add({
+        targets: "#v .triangle:nth-of-type(2)",
+        translateX: "-100%",
+        translateY: "-100%"
+      })
+      .add({
+        targets: "#v .triangle:nth-of-type(2)",
+        translateX: "-100%",
+        translateY: "0%"
+      })
+      .add({
+        targets: "#v .triangle:nth-of-type(2)",
+        translateX: "-50%",
+        translateY: "-100%"
+      })
+      .add({
+        targets: "#v .triangle:nth-of-type(2)",
+        translateX: "0%",
+        translateY: "0%"
+      })
+      .add({
+        targets: "#v .triangle:nth-of-type(2)",
+        translateX: "0%",
+        translateY: "-100%"
+      })
+      .add({
+        targets: "#v .triangle:nth-of-type(2)",
+        translateX: "-50%",
+        translateY: "0%"
+      });
   });
 
   $("#v").mouseleave(function() {
-    animation_v.pause();
-    animation_v_return = anime({
+    if (animation_v_one != null) animation_v_one.pause();
+    if (animation_v_two != null) animation_v_two.pause();
+    if (animation_v_one_return != null) animation_v_one_return.pause();
+    if (animation_v_two_return != null) animation_v_two_return.pause();
+    animation_v_one_return = anime({
+      targets: "#v .triangle:nth-of-type(1)",
+      translateX: "-50%",
+      translateY: "0%",
+      rotate: 0,
+      duration: 1500
+    });
+
+    animation_v_two_return = anime({
       targets: "#v .triangle:nth-of-type(2)",
-      scale: 1,
-      rotate: "0deg",
+      translateX: "-50%",
+      translateY: "0%",
+      rotate: 0,
       duration: 1500
     });
   });
 
   // W
-  var animation_w = null;
-  var animation_w_return = null;
+  var animation_w_one = null;
+  var animation_w_two = null;
+  var animation_w_one_return = null;
+  var animation_w_two_return = null;
   $("#w").mouseenter(function() {
+    if (animation_w_one != null) animation_w_one.pause();
+    if (animation_w_two != null) animation_w_two.pause();
+    if (animation_w_one_return != null) animation_w_one_return.pause();
+    if (animation_w_two_return != null) animation_w_two_return.pause();
     anime.set("#w .triangle:nth-of-type(1)", {
       translateX: "0%",
-      rotate: "0deg"
+      translateY: "0%",
+      rotate: 0
     });
 
-    animation_w = anime({
-      targets: "#w .triangle:nth-of-type(1)",
-      keyframes: [{ scale: "5" }, { scale: "1" }],
-      rotate: "1turn",
-      duration: 1500,
-      loop: true,
-      direction: "reverse",
-      easing: "easeInOutQuad"
+    anime.set("#w .triangle:nth-of-type(2)", {
+      translateX: "0%",
+      translateY: "0%",
+      rotate: 0
     });
+
+    animation_w_one = anime.timeline({
+      easing: "easeInOutCirc",
+      duration: 750,
+      loop: true
+    });
+
+    animation_w_one
+      .add({
+        targets: "#w .triangle:nth-of-type(1)",
+        translateX: "50%"
+      })
+      .add({
+        targets: "#w .triangle:nth-of-type(1)",
+        rotate: 180
+      })
+      .add({
+        targets: "#w .triangle:nth-of-type(1)",
+        translateX: "0%",
+        rotate: 0
+      });
+
+    animation_w_two = anime.timeline({
+      easing: "easeInOutCirc",
+      duration: 750,
+      loop: true
+    });
+
+    animation_w_two
+      .add({
+        targets: "#w .triangle:nth-of-type(2)",
+        translateX: "-50%"
+      })
+      .add({
+        targets: "#w .triangle:nth-of-type(2)",
+        rotate: -180
+      })
+      .add({
+        targets: "#w .triangle:nth-of-type(2)",
+        translateX: "0%",
+        rotate: 0
+      });
   });
 
   $("#w").mouseleave(function() {
-    animation_w.pause();
-    animation_w_return = anime({
+    if (animation_w_one != null) animation_w_one.pause();
+    if (animation_w_two != null) animation_w_two.pause();
+    if (animation_w_one_return != null) animation_w_one_return.pause();
+    if (animation_w_two_return != null) animation_w_two_return.pause();
+    animation_w_one_return = anime({
       targets: "#w .triangle:nth-of-type(1)",
+      translateX: "0%",
+      translateY: "0%",
       scale: 1,
-      rotate: "0deg",
-      duration: 1500
+      rotate: 0
+    });
+
+    animation_q_two_return = anime({
+      targets: "#w .triangle:nth-of-type(2)",
+      translateX: "0%",
+      translateY: "0%",
+      scale: 1,
+      rotate: 0
     });
   });
 
   // X
-  var animation_x = null;
-  var animation_x_return = null;
+  var animation_x_one = null;
+  var animation_x_two = null;
+  var animation_x_one_return = null;
+  var animation_x_two_return = null;
   $("#x").mouseenter(function() {
-    anime.set("#x .triangle:nth-of-type(2)", {
+    if (animation_x_one != null) animation_x_one.pause();
+    if (animation_x_two != null) animation_x_two.pause();
+    if (animation_x_one_return != null) animation_x_one_return.pause();
+    if (animation_x_two_return != null) animation_x_two_return.pause();
+    anime.set("#x .triangle:nth-of-type(1)", {
       translateX: "-50%",
-      rotate: "0deg"
+      translateY: "0%",
+      rotate: 0
     });
 
-    animation_x = anime({
-      targets: "#x .triangle:nth-of-type(2)",
-      keyframes: [{ scale: "5" }, { scale: "1" }],
-      rotate: "1turn",
-      duration: 1500,
-      loop: true,
-      direction: "alternate",
-      easing: "easeInOutQuad"
+    anime.set("#x .triangle:nth-of-type(2)", {
+      translateX: "-50%",
+      translateY: "0%",
+      rotate: 0
     });
+
+    animation_x_one = anime.timeline({
+      easing: "easeInOutCirc",
+      duration: 750,
+      loop: true
+    });
+
+    animation_x_one
+      .add({
+        targets: "#x .triangle:nth-of-type(1)",
+        scale: 0.5,
+        rotate: -360
+      })
+      .add({
+        targets: "#x .triangle:nth-of-type(1)",
+        rotate: 0,
+        scale: 1
+      });
+
+    animation_x_two = anime.timeline({
+      easing: "easeInOutCirc",
+      duration: 750,
+      loop: true
+    });
+
+    animation_x_two
+      .add({
+        targets: "#x .triangle:nth-of-type(2)",
+        scale: 0.5
+      })
+      .add({
+        targets: "#x .triangle:nth-of-type(2)",
+        rotate: 180
+      })
+      .add({
+        targets: "#x .triangle:nth-of-type(2)",
+        rotate: 0,
+        scale: 1
+      });
   });
 
   $("#x").mouseleave(function() {
-    animation_x.pause();
-    animation_x_return = anime({
-      targets: "#x .triangle:nth-of-type(2)",
+    if (animation_x_one != null) animation_x_one.pause();
+    if (animation_x_two != null) animation_x_two.pause();
+    if (animation_x_one_return != null) animation_x_one_return.pause();
+    if (animation_x_two_return != null) animation_x_two_return.pause();
+    animation_x_one_return = anime({
+      targets: "#x .triangle:nth-of-type(1)",
+      translateX: "-50%",
+      translateY: "0%",
       scale: 1,
-      rotate: "0deg",
-      duration: 1500
+      rotate: 0
+    });
+
+    animation_x_two_return = anime({
+      targets: "#x .triangle:nth-of-type(2)",
+      translateX: "-50%",
+      translateY: "0%",
+      scale: 1,
+      rotate: 0
     });
   });
 
   // Y
-  var animation_y = null;
-  var animation_y_return = null;
+  var animation_y_one = null;
+  var animation_y_two = null;
+  var animation_y_one_return = null;
+  var animation_y_two_return = null;
   $("#y").mouseenter(function() {
+    if (animation_y_one != null) animation_y_one.pause();
+    if (animation_y_two != null) animation_y_two.pause();
+    if (animation_y_one_return != null) animation_y_one_return.pause();
+    if (animation_y_two_return != null) animation_y_two_return.pause();
     anime.set("#y .semi-circle", {
       translateX: "-50%",
-      rotate: "0deg"
+      translateY: "0%",
+      rotate: 0
     });
 
-    animation_y = anime({
-      targets: "#y .semi-circle",
-      // scale: "10",
-      rotate: "1turn",
-      duration: 1500,
-      loop: true,
-      direction: "normal",
-      easing: "easeOutQuad"
+    anime.set("#y .rectangle", {
+      translateX: "-50%",
+      translateY: "0%",
+      rotate: 0
     });
+
+    animation_y_one = anime.timeline({
+      easing: "easeInOutCirc",
+      duration: 750,
+      loop: true
+    });
+
+    animation_y_one
+      .add({
+        targets: "#y .semi-circle",
+        rotate: 360
+      })
+      .add({
+        targets: "#y .semi-circle",
+        translateY: "100%"
+      })
+      .add({
+        targets: "#y .semi-circle",
+        translateY: "0%",
+        rotate: 0
+      });
+
+    animation_y_two = anime.timeline({
+      easing: "easeInOutCirc",
+      duration: 750,
+      loop: true
+    });
+
+    animation_y_two
+      .add({
+        targets: "#y .rectangle",
+        translateY: "35%",
+        scaleY: 0.3,
+        borderRadius: "50%"
+      })
+      .add({
+        targets: "#y .rectangle",
+        translateY: "65%"
+      })
+      .add({
+        targets: "#y .rectangle",
+        translateY: "0%"
+      })
+      .add({
+        targets: "#y .rectangle",
+        translateY: "0%",
+        scaleY: 1,
+        rotate: 0,
+        borderRadius: "0%"
+      });
   });
 
   $("#y").mouseleave(function() {
-    animation_y.pause();
-    animation_y_return = anime({
+    if (animation_y_one != null) animation_y_one.pause();
+    if (animation_y_two != null) animation_y_two.pause();
+    if (animation_y_one_return != null) animation_y_one_return.pause();
+    if (animation_y_two_return != null) animation_y_two_return.pause();
+    animation_y_one_return = anime({
       targets: "#y .semi-circle",
+      translateX: "-50%",
+      translateY: "0%",
       scale: 1,
-      rotate: "0deg",
-      duration: 1500
+      rotate: 0
+    });
+
+    animation_y_two_return = anime({
+      targets: "#y .rectangle",
+      translateX: "-50%",
+      translateY: "0%",
+      scaleY: 1,
+      rotate: 0,
+      borderRadius: "0%"
     });
   });
 
   // Z
-  var animation_z = null;
-  var animation_z_return = null;
+  var animation_z_one = null;
+  var animation_z_two = null;
+  var animation_z_one_return = null;
+  var animation_z_two_return = null;
   $("#z").mouseenter(function() {
+    if (animation_z_one != null) animation_z_one.pause();
+    if (animation_z_two != null) animation_z_two.pause();
+    if (animation_z_one_return != null) animation_z_one_return.pause();
+    if (animation_z_two_return != null) animation_z_two_return.pause();
     anime.set("#z .rectangle", {
       translateX: "0%",
-      rotate: "0deg"
+      translateY: "0%",
+      rotate: 0
     });
 
-    animation_z = anime({
-      targets: "#z .rectangle",
-      keyframes: [{ scale: "5" }, { scale: "1" }],
-      rotate: "1turn",
-      duration: 1500,
-      loop: true,
-      direction: "normal",
-      easing: "easeInOutQuad"
+    anime.set("#z .right-triangle", {
+      translateX: "0%",
+      translateY: "0%",
+      rotate: 0
     });
+
+    animation_z_one = anime.timeline({
+      easing: "easeInOutCirc",
+      duration: 750,
+      loop: true
+    });
+
+    animation_z_one
+      .add({
+        targets: "#z .rectangle",
+        translateY: "200%"
+      })
+      .add({
+        targets: "#z .rectangle",
+        translateY: "0%"
+      });
+
+    animation_z_two = anime.timeline({
+      easing: "easeInOutCirc",
+      duration: 750,
+      loop: true
+    });
+
+    animation_z_two
+      .add({
+        targets: "#z .right-triangle",
+        rotate: 180
+      })
+      .add({
+        targets: "#z .right-triangle",
+        rotate: 0
+      });
   });
 
   $("#z").mouseleave(function() {
-    animation_z.pause();
-    animation_z_return = anime({
+    if (animation_z_one != null) animation_z_one.pause();
+    if (animation_z_two != null) animation_z_two.pause();
+    if (animation_z_one_return != null) animation_z_one_return.pause();
+    if (animation_z_two_return != null) animation_z_two_return.pause();
+    animation_z_one_return = anime({
       targets: "#z .rectangle",
+      translateX: "0%",
+      translateY: "0%",
       scale: 1,
-      rotate: "0deg",
-      duration: 1500
+      rotate: 0
+    });
+
+    animation_z_two_return = anime({
+      targets: "#z .right-triangle",
+      translateX: "0%",
+      translateY: "0%",
+      scale: 1,
+      rotate: 0
     });
   });
 
