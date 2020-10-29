@@ -6,6 +6,7 @@ console.log("hi");
 
 var mouseX = 0,
   mouseY = 0;
+var lastScrolled = 0;
 
 window.onbeforeunload = function() {
   window.scrollTo(0, 0);
@@ -29,21 +30,22 @@ $(document).ready(function() {
     mouseY = map.pageY;
   });
 
-  //   $("html").scroll(function(map) {
-  //     mouseX = map.pageX;
-  //     mouseY = map.pageY;
-  //   });
+  $("html").scroll(function(map) {
+    mouseX = map.pageX;
+    mouseY = map.pageY;
+  });
 
-  //   $(window).scroll(function(map) {
-  //     console.log("HI")
-  //     $("#cursor-parent").css({
-  //       visibility: "visible",
-  //       top: map.pageY + "px",
-  //       left: map.pageX + "px"
-  //     });
-  //     mouseX = map.pageX;
-  //     mouseY = map.pageY;
-  //   });
+  $(window).scroll(function(map) {
+    if (lastScrolled != $(document).scrollTop()) {
+      mouseY -= lastScrolled;
+      lastScrolled = $(document).scrollTop();
+      mouseY += lastScrolled;
+      $("#cursor-parent").css({
+        visibility: "visible",
+        top: mouseY + "px"
+      });
+    }
+  });
 
   $(".word-letter").mouseenter(function() {
     $("#cursor").css("background-color", "rgba(255,255,255, 0)");
@@ -173,6 +175,7 @@ $(document).ready(function() {
         rotate: 0,
         duration: 1500
       });
+      a_timer = null;
     }, 3000);
   });
 
